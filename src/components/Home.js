@@ -1,30 +1,19 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
+import { API } from '../shared/config.js';
 import { postsDataService } from '../shared/postsDataservice.js';
 import BlogList from './BlogList';
 import Spinner from './spinner';
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
-  const [isFetching, setIsFetching] = useState(false);
-
-  const fetchPosts = async () => {
-    setIsFetching(true);
-    const retrievedPosts = await postsDataService.getAll();
-    setPosts(retrievedPosts);
-    setIsFetching(false);
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  const { data: posts, isFetching, error } = postsDataService.useFetch(API);
 
   const deletePost = async (postId) => {
-    const wasRemoved = await postsDataService.remove(postId);
-    if (!wasRemoved) {
-      alert('Unable to remove post');
-      return;
-    }
-    setPosts(posts.filter((p) => p._id !== postId));
+    // const wasRemoved = await postsDataService.remove(postId);
+    // if (!wasRemoved) {
+    //   alert('Unable to remove post');
+    //   return;
+    // }
+    // setPosts(posts.filter((p) => p._id !== postId));
   };
 
   return (
@@ -36,6 +25,7 @@ const Home = () => {
         ) : (
           <BlogList posts={posts} onDelete={deletePost} />
         )}
+        {error && <p>{error}</p>}
       </div>
     </div>
   );
