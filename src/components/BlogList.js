@@ -3,7 +3,12 @@ import PostPreview from './PostPreview';
 const BlogList = ({ posts, onDelete }) => {
   function PostPreviews() {
     return posts.map((post) => (
-      <PostPreview postPreview={post} onDelete={onDelete} key={post._id} />
+      <PostPreview
+        postPreview={post}
+        onDelete={onDelete}
+        isPreview={true}
+        key={post._id}
+      />
     ));
   }
 

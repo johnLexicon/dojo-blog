@@ -17,8 +17,8 @@ const Home = () => {
   };
 
   return (
-    <div className="container">
-      <div className="m-auto d-flex flex-column align-items-center">
+    <div>
+      <div className="m-auto w-75 text-center">
         <h2 className="text-center text-secondary my-4">Previews</h2>
         {isFetching ? (
           <Spinner width="5rem" height="5rem" classes="text-secondary mt-5" />
