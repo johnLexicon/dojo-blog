@@ -12,7 +12,7 @@ const PostDetails = () => {
     error,
   } = postsDataService.useFetch(`${API}/${id}`);
   return (
-    <div>
+    <div className="text-center">
       <h2 className="my-4 text-secondary">Post Details</h2>
       {isFetching ? (
         <Spinner width="5rem" height="5rem" classes="text-secondary mt-5" />
