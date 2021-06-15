@@ -1,16 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PostPreview from './PostPreview';
 
 const CreatePost = () => {
-  // const [title, setTitle] = useState('');
-  // const [body, setBody] = useState('');
-  // const [imgUrl, setImgUrl] = useState('');
   const [post, setPost] = useState({ title: '', body: '', imgUrl: '' });
+  const [isValid, setIsValid] = useState(false);
+
+  const validatePost = () => {
+    if (post.title && post.body && post.body.length >= 50) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  };
+
+  useEffect(() => {
+    validatePost();
+  });
+
+  const onCreatePost = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div>
       <h2 className="text-secondary my-4">Create Post</h2>
-      <form className="border border-light mb-5">
+      <form className="border border-light mb-5" onSubmit={onCreatePost}>
         <div className="form-group mb-4">
           <label className="fw-bold fs-5 text-muted" htmlFor="title">
             Title
@@ -62,7 +76,11 @@ const CreatePost = () => {
           </span>
         </div>
 
-        <button className="btn btn-danger btn-block" type="submit">
+        <button
+          disabled={!isValid}
+          className="btn btn-danger btn-block"
+          type="submit"
+        >
           Send
         </button>
       </form>
