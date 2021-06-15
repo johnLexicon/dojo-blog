@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { API } from '../shared/config.js';
+import { postsDataService } from '../shared/postsDataservice';
 import PostPreview from './PostPreview';
 
 const CreatePost = () => {
   const [post, setPost] = useState({ title: '', body: '', imgUrl: '' });
   const [isValid, setIsValid] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+  const history = useHistory();
 
   const validatePost = () => {
     if (post.title && post.body && post.body.length >= 50) {
@@ -17,8 +22,16 @@ const CreatePost = () => {
     validatePost();
   });
 
-  const onCreatePost = (e) => {
+  const onCreatePost = async (e) => {
     e.preventDefault();
+    setIsPending(true);
+    const data = await postsDataService.create(API, post);
+    setIsPending(false);
+    if (data) {
+      history.push('/');
+    } else {
+      console.log('Error while posting data');
+    }
   };
 
   return (
@@ -76,13 +89,20 @@ const CreatePost = () => {
           </span>
         </div>
 
-        <button
-          disabled={!isValid}
-          className="btn btn-danger btn-block"
-          type="submit"
-        >
-          Send
-        </button>
+        {!isPending && (
+          <button
+            disabled={!isValid}
+            className="btn btn-danger btn-block"
+            type="submit"
+          >
+            Send
+          </button>
+        )}
+        {isPending && (
+          <button disabled className="btn btn-danger btn-block" type="button">
+            Sending...
+          </button>
+        )}
       </form>
       <h2 className="text-secondary">Preview Post</h2>
       <PostPreview postPreview={post} isPreview={false} />

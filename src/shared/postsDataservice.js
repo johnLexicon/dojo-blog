@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { API } from './config.js';
 import { useState, useEffect } from 'react';
 
 const useFetch = (api) => {
@@ -30,9 +29,22 @@ const useFetch = (api) => {
   return { data, isFetching, error };
 };
 
-const remove = async (id) => {
+const create = async (api, data) => {
   try {
-    const response = await axios.delete(API + '/' + id);
+    const response = await axios.post(api, data);
+    if (response.status !== 201) {
+      throw new Error('Error when posting post');
+    }
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+const remove = async (api, id) => {
+  try {
+    const response = await axios.delete(api + '/' + id);
     return response.status === 200;
   } catch (err) {
     console.log(err);
@@ -43,4 +55,5 @@ const remove = async (id) => {
 export const postsDataService = {
   useFetch,
   remove,
+  create,
 };
