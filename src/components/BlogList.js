@@ -4,7 +4,7 @@ const BlogList = ({ posts, onDelete }) => {
   function PostPreviews() {
     return posts.map((post) => (
       <PostPreview
-        postPreview={post}
+        postPreview={{ ...post, body: post.body.slice(0, 200) + '...' }}
         onDelete={onDelete}
         isPreview={true}
         key={post._id}
