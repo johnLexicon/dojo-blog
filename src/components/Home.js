@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <div>
-      <div className="m-auto w-75 text-center">
+      <div className="m-auto container-md container-fluid text-center">
         <h2 className="text-center text-secondary my-4">Previews</h2>
         {isFetching ? (
           <Spinner width="5rem" height="5rem" classes="text-secondary mt-5" />
