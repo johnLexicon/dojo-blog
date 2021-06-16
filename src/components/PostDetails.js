@@ -17,7 +17,7 @@ const PostDetails = () => {
       {isFetching ? (
         <Spinner width="5rem" height="5rem" classes="text-secondary mt-5" />
       ) : (
-        <PostPreview postPreview={post} isPreview={false} />
+        <PostPreview postPreview={post} isPreview={false} isRemovable={true} />
       )}
       {error && <p>{error}</p>}
     </div>
