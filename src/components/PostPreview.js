@@ -23,8 +23,4 @@ const PostPreview = ({ postPreview, isPreview, isRemovable }) => {
   );
 };
 
-PostPreview.defaultProps = {
-  isPreview: true,
-};
-
 export default PostPreview;
